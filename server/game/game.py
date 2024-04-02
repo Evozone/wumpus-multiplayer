@@ -4,8 +4,6 @@ import random
 import player
 import instructions
 
-import random
-
 
 def generate_seed():
     # Create a list of all possible coordinates
@@ -167,11 +165,11 @@ class Game:
             if self.board[x][y].get_wumpus():
                 self.player.set_alive(False)
                 print("You were eaten by the Wumpus!") if step_by_step else None
-                input("Press enter to continue...") if step_by_step else None
+                # input("Press enter to continue...") if step_by_step else None
             elif self.board[x][y].get_pit():
                 self.player.set_alive(False)
                 print("You fell into a pit and died!") if step_by_step else None
-                input("Press enter to continue...") if step_by_step else None
+                # input("Press enter to continue...") if step_by_step else None
 
         elif action in ["a", "d"]:
             self.change_direction(action)
@@ -188,8 +186,9 @@ class Game:
             self.game_over, self.game_won = True, False
             return
 
-        # If the player is in 0, 0 with the gold, the game is over and the player wins
-        if self.player.get_player_position() == (0, 0) and self.player.get_has_gold():
+        # Check if the player has grabbed the gold
+        if self.sensors["glitter"] and self.player.get_player_position() != (0, 0):
+            self.player.set_has_gold(True)
             self.game_over = True
             self.game_won = True
 
@@ -334,7 +333,7 @@ class Game:
         if self.sensors["stench"]:
             print("You smell a stench. Ew!")
         if self.sensors["glitter"]:
-            print("You see a glitter. Something shiny!")
+            print("You found the gold. You Won!")
         if self.sensors["bump"]:
             print("You bump into a wall. Ouch!")
         if self.sensors["scream"]:

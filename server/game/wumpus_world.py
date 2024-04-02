@@ -41,17 +41,12 @@ def run_game_with_human():
         game.game_loop()
 
     # If game over, won or lost?
-    if game.game_over:
-        if game.game_won:
-            print("Congratulations! You took the gold and escaped the cave alive!")
-            print("-" * 50)
-        else:
-            print("Use a better strategy next time. You died!")
-            print("-" * 50)
-
-        # Press enter to exit the game
-        input("Press enter to exit the game...")
-        os.system("cls" if os.name == "nt" else "clear")
+    if game.game_over and game.game_won:
+        return True
+    else:
+        print("Use a better strategy next time. You died!")
+        print("-" * 50)
+        return False
 
 
 if __name__ == "__main__":
