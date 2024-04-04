@@ -14,14 +14,18 @@ def generate_seed():
     # Shuffle the list
     random.shuffle(coordinates)
 
-    # Assign the first coordinate to the wumpus, the next two to the pits, and the fourth one to the gold
+    # Select the first 6 coordinates as the wumpus, pits, and gold
     wumpus = coordinates[0]
     pit1 = coordinates[1]
     pit2 = coordinates[2]
-    gold = coordinates[3]
+    pit3 = coordinates[3]
+    pit4 = coordinates[4]
+    gold = coordinates[5]
 
     # Flatten the tuples and return as the seed
-    seed = [coord for tuple in [wumpus, pit1, pit2, gold] for coord in tuple]
+    seed = [
+        coord for tuple in [wumpus, pit1, pit2, pit3, pit4, gold] for coord in tuple
+    ]
 
     return seed
 
@@ -50,7 +54,7 @@ class Game:
         self.game_over = False
         self.game_won = False
         self.size_of_cave = 8
-        self.num_pits = 2
+        self.num_pits = 4
 
     # Create the 8x8 game board (the cave)
     def create_board(self):
@@ -82,7 +86,7 @@ class Game:
 
     # Set the pit locations
     def set_pits(self):
-        # Two pits
+        # Four pits are placed in the cave
         for i in range(self.num_pits):
             x = self.seed[2 + (i * 2)]
             y = self.seed[3 + (i * 2)]
